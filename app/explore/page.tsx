@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, ArrowUp, Mail, Linkedin, Github, X } from "lucide-react"
+import { ArrowLeft, ArrowUp, ArrowRight, Mail, Linkedin, Github, X } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { useLang } from "@/contexts/LanguageContext"
@@ -165,19 +165,75 @@ export default function ExplorePage() {
         </div>
       </section>
 
-      {/* Modal */}
-      {selectedImage && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 flex items-center justify-center bg-background/90 p-4 backdrop-blur-sm" onClick={() => setSelectedImage(null)}>
-          <div className="relative max-h-[80vh] max-w-4xl overflow-hidden rounded-2xl border border-border bg-card">
-            <button onClick={() => setSelectedImage(null)} className="absolute right-4 top-4 z-10 rounded-full border border-border bg-background/80 p-2 text-foreground transition-all hover:border-primary hover:text-primary"><X className="h-5 w-5" /></button>
-            <div className="relative aspect-video w-full">
-              {galleryImages.find(img => img.id === selectedImage) && (
-                <Image src={galleryImages.find(img => img.id === selectedImage)!.src} alt={galleryImages.find(img => img.id === selectedImage)!.alt} fill className="object-contain" />
-              )}
-            </div>
-          </div>
-        </motion.div>
-      )}
+      {/* Lightbox */}
+      {selectedImage && (() => {
+        const currentIndex = galleryImages.findIndex(img => img.id === selectedImage)
+        const current = galleryImages[currentIndex]
+        const prev = galleryImages[currentIndex - 1]
+        const next = galleryImages[currentIndex + 1]
+        return (
+          <motion.div
+            key={selectedImage}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md"
+            onClick={() => setSelectedImage(null)}
+          >
+            {/* Close */}
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute right-5 top-5 z-10 rounded-full border border-white/20 bg-black/50 p-2 text-white transition-all hover:border-primary hover:text-primary"
+            >
+              <X className="h-5 w-5" />
+            </button>
+
+            {/* Prev */}
+            {prev && (
+              <button
+                onClick={e => { e.stopPropagation(); setSelectedImage(prev.id) }}
+                className="absolute left-4 z-10 rounded-full border border-white/20 bg-black/50 p-3 text-white transition-all hover:border-primary hover:text-primary"
+              >
+                <ArrowLeft className="h-5 w-5" />
+              </button>
+            )}
+
+            {/* Image */}
+            <motion.div
+              key={current.id}
+              initial={{ scale: 0.85, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="relative max-h-[90vh] max-w-[90vw]"
+              onClick={e => e.stopPropagation()}
+            >
+              <Image
+                src={current.src}
+                alt={current.alt}
+                width={1200}
+                height={900}
+                className="max-h-[90vh] w-auto rounded-xl object-contain shadow-2xl"
+                priority
+              />
+              {/* Caption */}
+              <div className="mt-3 text-center font-[Inter] text-sm text-white/50">
+                {currentIndex + 1} / {galleryImages.length}
+              </div>
+            </motion.div>
+
+            {/* Next */}
+            {next && (
+              <button
+                onClick={e => { e.stopPropagation(); setSelectedImage(next.id) }}
+                className="absolute right-4 z-10 rounded-full border border-white/20 bg-black/50 p-3 text-white transition-all hover:border-primary hover:text-primary"
+              >
+                <ArrowRight className="h-5 w-5" />
+              </button>
+            )}
+          </motion.div>
+        )
+      })()}
 
       {/* Project Details */}
       <section className="px-4 py-20">
