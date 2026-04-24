@@ -126,7 +126,7 @@ export default function GeneratePage() {
                   <Label className="font-[Inter] text-sm text-muted-foreground">{t.iterationsLabel}</Label>
                   <span className="font-[Inter] text-sm text-primary">{iterations}</span>
                 </div>
-                <Slider value={[iterations]} onValueChange={([v]) => setIterations(v)} min={50} max={300} step={10} className="[&_[role=slider]]:bg-primary" />
+                <Slider value={[iterations]} onValueChange={([v]) => setIterations(v)} min={1} max={300} step={1} className="[&_[role=slider]]:bg-primary" />
               </div>
             </CollapsibleContent>
           </Collapsible>

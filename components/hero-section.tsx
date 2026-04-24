@@ -77,7 +77,6 @@ export function HeroSection() {
             { value: "5", label: t.stat1 },
             { value: "∞", label: t.stat2 },
             { value: "800+", label: t.stat3 },
-            { value: "72°", label: t.stat4 },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="font-[Playfair_Display] text-3xl font-bold text-primary sm:text-4xl">
@@ -90,14 +89,6 @@ export function HeroSection() {
           ))}
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="flex flex-col items-center gap-2">
-            <span className="font-[Inter] text-xs tracking-widest text-muted-foreground uppercase">
-              {t.scrollLabel}
-            </span>
-            <div className="h-12 w-px bg-gradient-to-b from-primary/50 to-transparent" />
-          </div>
-        </div>
       </div>
 
       <div className="pointer-events-none absolute left-0 top-0 h-32 w-32 border-l-2 border-t-2 border-primary/20" />
