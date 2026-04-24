@@ -72,7 +72,7 @@ export function HeroSection() {
           </Button>
         </div>
 
-        <div className="mt-20 grid grid-cols-2 gap-8 sm:grid-cols-4 sm:gap-12 animate-fade-in-up" style={{ animationDelay: "0.6s" }}>
+        <div className="mt-20 flex justify-center gap-12 animate-fade-in-up" style={{ animationDelay: "0.6s" }}>
           {[
             { value: "5", label: t.stat1 },
             { value: "∞", label: t.stat2 },

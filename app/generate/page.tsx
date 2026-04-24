@@ -43,7 +43,7 @@ export default function GeneratePage() {
 
   const handleDownload = useCallback(() => {
     const canvas = document.querySelector("canvas"); if (!canvas) return
-    const link = document.createElement("a"); link.download = `girih-pattern-${seed}.png`; link.href = canvas.toDataURL("image/png"); link.click()
+    const link = document.createElement("a"); link.download = `girih-pattern-${seed}.png`; link.href = (canvas as HTMLCanvasElement).toDataURL("image/png"); link.click()
   }, [seed])
 
   const handleGenerated = useCallback((tiles: number, points: number) => { setTileCount(tiles); setPointCount(points) }, [])
@@ -126,7 +126,7 @@ export default function GeneratePage() {
                   <Label className="font-[Inter] text-sm text-muted-foreground">{t.iterationsLabel}</Label>
                   <span className="font-[Inter] text-sm text-primary">{iterations}</span>
                 </div>
-                <Slider value={[iterations]} onValueChange={([v]) => setIterations(v)} min={1} max={300} step={1} className="[&_[role=slider]]:bg-primary" />
+                <Slider value={[iterations]} onValueChange={([v]) => setIterations(v)} min={0} max={300} step={1} className="[&_[role=slider]]:bg-primary" />
               </div>
             </CollapsibleContent>
           </Collapsible>
